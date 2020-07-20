@@ -1,3 +1,3 @@
 apply plugin: 'java'
 apply plugin: 'application'
-mainClassName = "hello"
+mainClassName = "ru.stqa.jt2020.sandbox.hello1"
