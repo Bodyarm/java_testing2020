@@ -11,9 +11,12 @@ public class hello1 {
         int storona = 5;
         int sq =storona * storona;
         System.out.println("Площадь квадрата со стороной "+storona+ "=" + sq);
-        double lne = 5;
-        System.out.println("Площадь через функцию = "+ area(lne));
-        System.out.println("Площать прямоугольника ="+ area(7,3));
+
+        Square s= new Square(6);
+        System.out.println("Площадь через функцию со стороной "+ s.l + " = "+ area(s));
+
+        Rectangle r = new Rectangle(4,8);
+        System.out.println("Площать прямоугольника со стороныами " + r.a + " и " + r.b +" = " + area(r));
 
 
     }
@@ -23,11 +26,11 @@ public class hello1 {
         System.out.println("Hello, world! " + somebody);
     }
 
-    public static double area(double l){
-        return l*l;
+    public static double area(Square s){
+        return s.l*s.l;
     }
-    public static double area(double a,double b){
-        return a*b;
+    public static double area(Rectangle r){
+        return r.a*r.b;
     }
 }
 
