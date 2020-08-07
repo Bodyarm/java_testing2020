@@ -1,3 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = "ru.stqa.jt2020.sandbox.hello1"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.3.0'
+}
