@@ -20,7 +20,7 @@ public class ContractCreationsTests {
 
 
     @Test
-    public void testUntitledTestCase() throws Exception {
+    public void testContractCreation() throws Exception {
 
         initContractCreation();
         fillContractForm(new ContractData("check3", "test2", "test3", "test4", "test5", "test6"));
