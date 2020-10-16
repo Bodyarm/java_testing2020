@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook;
+package ru.stqa.giv.addressbook.model;
 
 public class ContractData {
     private final String firstname;
