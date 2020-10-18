@@ -3,7 +3,7 @@ package ru.stqa.giv.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 
-public class ContractCreationsTests extends TestBase {
+public class ContractCreationTests extends TestBase {
 
     @Test
     public void testContractCreation() throws Exception {

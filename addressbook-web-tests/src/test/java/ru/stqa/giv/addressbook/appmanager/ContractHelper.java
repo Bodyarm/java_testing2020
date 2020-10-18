@@ -28,5 +28,23 @@ public class ContractHelper  extends HelperBase{
     }
 
 
+    public void selectContract() {
+        click(By.name("selected[]"));
+    }
 
+    public void deleteSelectedContracts() {
+        click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void confirmContractDeletion() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void initContractModification() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitContractModification() {
+        click(By.name("update"));
+    }
 }
