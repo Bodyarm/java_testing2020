@@ -7,14 +7,16 @@ public class ContractData {
     private final String nickname;
     private final String title;
     private final String company;
+    private String group;
 
-    public ContractData(String firstname, String middlename, String lastname, String nickname, String title, String company) {
+    public ContractData(String firstname, String middlename, String lastname, String nickname, String title, String company, String group) {
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
         this.nickname = nickname;
         this.title = title;
         this.company = company;
+        this.group = group;
     }
 
     public String getFirstname() {
@@ -40,4 +42,6 @@ public class ContractData {
     public String getCompany() {
         return company;
     }
+
+    public String getGroup() {return group;}
 }

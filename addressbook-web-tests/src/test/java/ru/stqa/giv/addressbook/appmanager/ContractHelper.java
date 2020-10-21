@@ -1,7 +1,9 @@
 package ru.stqa.giv.addressbook.appmanager;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.giv.addressbook.model.ContractData;
 
 public class ContractHelper  extends HelperBase{
@@ -14,13 +16,20 @@ public class ContractHelper  extends HelperBase{
         click(By.linkText("add new"));
     }
 
-    public void fillContractForm(ContractData contractData) {
+    public void fillContractForm(ContractData contractData, boolean creation) {
         type(By.name("firstname"),contractData.getFirstname());
         type(By.name("middlename"),contractData.getMiddlename());
         type(By.name("lastname"),contractData.getLastname());
         type(By.name("nickname"),contractData.getNickname());
         type(By.name("title"),contractData.getTitle());
         type(By.name("company"),contractData.getCompany());
+        if (creation) {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
+        }
+        else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
+
     }
 
     public void submitContractCreation() {

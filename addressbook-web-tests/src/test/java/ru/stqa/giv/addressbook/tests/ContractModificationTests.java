@@ -11,7 +11,7 @@ public class ContractModificationTests extends TestBase{
         app.getNavigationHelper().returnToHomePage();
         app.getContractHelper().selectContract();
         app.getContractHelper().initContractModification();
-        app.getContractHelper().fillContractForm(new ContractData("mod2", "mod3", "m0d14", "Vasiliii", "Mr", "OOO Piff Paff"));
+        app.getContractHelper().fillContractForm(new ContractData("mod2", "mod3", "m0d14", "Vasiliii", "Mr", "OOO Piff Paff",  null),false);
         app.getContractHelper().submitContractModification();
         app.getNavigationHelper().returnToHomePage();
 
