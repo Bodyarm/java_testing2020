@@ -12,9 +12,9 @@ public class HelperBase {
         this.wd = wd;
     }
 
-    protected void type(By locator, String text) {
+    public void type(By locator, String text) {
         click(locator);
-        if (text != null) {
+        if (!text.equals(null)) {
             String existingText = wd.findElement(locator).getAttribute("value");
             if (!text.equals(existingText)) {
                 wd.findElement(locator).clear();
