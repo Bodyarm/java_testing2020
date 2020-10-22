@@ -56,4 +56,14 @@ public class ContractHelper  extends HelperBase{
     public void submitContractModification() {
         click(By.name("update"));
     }
+
+    public boolean isContractThere() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void createContract(ContractData contractData) {
+        initContractCreation();
+        fillContractForm(contractData,true);
+        submitContractCreation();
+    }
 }
