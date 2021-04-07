@@ -4,17 +4,21 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.giv.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class GroupCreationTests extends TestBase {
 
     @Test
     public void testGroupCreation() throws Exception {
 
         app.getNavigationHelper().goToGroupPage();
-        int before = app.getGroupHelper().getGroupCount();
-        app.getGroupHelper().createGroup(new GroupData("test1", null, null));
-        int after = app.getGroupHelper().getGroupCount();
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        System.out.println("Groups Amount is "+ before.size() );
 
-        Assert.assertEquals(after,before+1);
+        app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        System.out.println("Groups Amount is "+ after.size() );
+        Assert.assertEquals(after.size(),before.size()+1);
 
     }
 
