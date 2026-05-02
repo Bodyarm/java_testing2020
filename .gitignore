@@ -14,3 +14,8 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 .idea/workspace.xml
 .idea/misc.xml
+/.idea/
+/addressbook-web-tests/build
+/addressbook-web-tests/out
+/sandbox/build
+/sandbox/out
