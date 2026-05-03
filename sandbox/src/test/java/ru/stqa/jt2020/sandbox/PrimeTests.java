@@ -1,7 +1,7 @@
 package ru.stqa.jt2020.sandbox;
 
 
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PrimeTests {

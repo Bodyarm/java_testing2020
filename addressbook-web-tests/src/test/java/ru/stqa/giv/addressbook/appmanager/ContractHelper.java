@@ -1,6 +1,6 @@
 package ru.stqa.giv.addressbook.appmanager;
 
-import org.junit.Assert;
+import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
