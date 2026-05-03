@@ -1,10 +1,15 @@
 package ru.stqa.giv.addressbook.appmanager;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.giv.addressbook.model.ContractData;
+import ru.stqa.giv.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContractHelper  extends HelperBase{
 
@@ -25,7 +30,7 @@ public class ContractHelper  extends HelperBase{
         type(By.name("company"),contractData.getCompany());
         if (creation) {
             if ( contractData.getGroup() !=null) {
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
+                    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
             }
         }
         else {
@@ -67,5 +72,21 @@ public class ContractHelper  extends HelperBase{
         initContractCreation();
         fillContractForm(contractData,true);
         submitContractCreation();
+    }
+
+    public List<ContractData> getContractList() {
+        List<ContractData> groups = new ArrayList<ContractData>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr[name='entry']"));
+
+        for (WebElement element : elements){
+
+            List<WebElement> columns = element.findElements(By.tagName("td"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+            String lastName = columns.get(1).getText();
+            String firstName = columns.get(2).getText();
+            ContractData contract = new ContractData(id, firstName, lastName);
+            groups.add(contract);
+        }
+        return groups;
     }
 }
