@@ -29,7 +29,6 @@ public class GroupModificationTests extends TestBase{
 
         List<GroupData> after = app.getGroupHelper().getGroupList();
         System.out.println("Groups Amount is "+ after.size() );
-        Assert.assertEquals(after.size(), before.size());
 
         before.remove((before.size()-1));
         before.add(group);
@@ -38,7 +37,6 @@ public class GroupModificationTests extends TestBase{
         before.sort(byID);
         after.sort(byID);
 
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
         Assert.assertEquals(before,after);
 
 

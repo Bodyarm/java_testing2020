@@ -12,15 +12,6 @@ public class ContractModificationTests extends TestBase{
     @Test
     public void testContractModification() throws Exception {
 
-
-        //Зачитываем список до модификации
-        //После модификации у первого в списке меняем fisrtname, lastname
-        //Зачитываем обновлённый список
-        //Добавляем компоратор
-        //Сравниваем
-
-
-
         app.getNavigationHelper().returnToHomePage();
         if (!app.getContractHelper().isContractThere() ){
             app.getContractHelper().createContract(new ContractData("Check1", "Kus", "DOG_KILLER", "Tiiitle","DDDD", "OOO Lopata", "test1"));

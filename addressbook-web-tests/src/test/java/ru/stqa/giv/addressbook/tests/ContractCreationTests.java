@@ -13,6 +13,7 @@ public class ContractCreationTests extends TestBase {
     @Test
     public void testContractCreation() throws Exception {
 
+        app.getNavigationHelper().returnToHomePage();
 
         List<ContractData> before = app.getContractHelper().getContractList();
 
