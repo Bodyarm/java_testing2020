@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.giv.addressbook.model.ContractData;
-import ru.stqa.giv.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +67,13 @@ public class ContractHelper  extends HelperBase{
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createContract(ContractData contractData) {
+    public void create(ContractData contractData) {
         initContractCreation();
         fillContractForm(contractData,true);
         submitContractCreation();
     }
 
-    public List<ContractData> getContractList() {
+    public List<ContractData> list() {
         List<ContractData> groups = new ArrayList<ContractData>();
         List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr[name='entry']"));
 

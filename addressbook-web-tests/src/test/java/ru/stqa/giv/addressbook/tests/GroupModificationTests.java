@@ -13,23 +13,23 @@ public class GroupModificationTests extends TestBase{
 
     @BeforeMethod
     public void checkPreconditions(){
-        app.getNavigationHelper().goToGroupPage();
-        if (!app.getGroupHelper().isThereAGroup()){
-            app.getGroupHelper().createGroup(new GroupData("test1",null,null));
+        app.goTo().groupPage();
+        if (app.group().list().isEmpty()){
+            app.group().create(new GroupData("test1",null,null));
         }
     }
 
     @Test
     public void testGroupModification(){
 
-        List<GroupData> before = app.getGroupHelper().getGroupList();
+        List<GroupData> before = app.group().list();
         System.out.println("Groups Amount is "+ before.size() );
         int index = before.size()-1;
 
         GroupData group = new GroupData(before.get(index).getId(),"mod1","mod2", "mod3");
-        app.getGroupHelper().modifyGroup(index, group);
+        app.group().modify(index, group);
 
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        List<GroupData> after = app.group().list();
         System.out.println("Groups Amount is "+ after.size() );
 
         before.remove((index));
