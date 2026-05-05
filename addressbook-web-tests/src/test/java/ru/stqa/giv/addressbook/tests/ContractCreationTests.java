@@ -6,6 +6,7 @@ import ru.stqa.giv.addressbook.model.ContractData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContractCreationTests extends TestBase {
 
@@ -13,34 +14,27 @@ public class ContractCreationTests extends TestBase {
     public void testContractCreation()  {
 
         app.goTo().homePage();
-
-        List<ContractData> before = app.contract().list();
+        Set<ContractData> before = app.contract().all();
 
         app.contract().initContractCreation();
-
-        app.contract().create(new ContractData().withFirstname("check").withMiddleName("test2").withLastName("test3").withNickName("test4").withTitle("Good title").withCompany("Dreamworks").withGroup("test1"));
+        ContractData contractToCreate = new ContractData().withFirstname("check").withMiddleName("test2").withLastName("test3").withNickName("test4").withTitle("Good title").withCompany("Dreamworks").withGroup("test1");
+        app.contract().create(contractToCreate);
         app.goTo().homePage();
 
-        List<ContractData> after = app.contract().list();
+        Set<ContractData> after = app.contract().all();
 
-        ContractData newContract = new ContractData().withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId()).withFirstname("check").withLastName("test3");
+        //ContractData newContract = new ContractData().withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId()).withFirstname("check").withLastName("test3");
+        ContractData newContract = new ContractData()
+                .withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt())
+                .withFirstname(contractToCreate.getFirstname())
+                .withLastName(contractToCreate.getLastname());
         before.add(newContract);
 
-        Comparator<? super ContractData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
-        before.sort(byID);
-        after.sort(byID);
-
-        System.out.println(before.toString());
-        System.out.println("----------------------");
-        System.out.println(after.toString());
+//        Comparator<? super ContractData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
+//        before.sort(byID);
+//        after.sort(byID);
 
         Assert.assertEquals(before, after);
-
-
-
-        // Отсортировать before и after
-        // Сравнить их Assert'ом
-
 
     }
 

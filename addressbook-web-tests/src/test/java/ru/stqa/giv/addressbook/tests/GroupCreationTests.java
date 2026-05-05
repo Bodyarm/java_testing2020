@@ -4,9 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
 
-import java.util.Comparator;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTests extends TestBase {
 
@@ -14,21 +13,17 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreation() throws Exception {
 
         app.goTo().groupPage();
-        List<GroupData> before = app.group().list();
-        System.out.println("Groups Amount is "+ before.size() );
+        Set<GroupData> before = app.group().all();
 
         GroupData group = new GroupData().withName("testX");
         app.group().create(group);
-        List<GroupData> after = app.group().list();
-        System.out.println("Groups Amount is "+ after.size() );
+        Set<GroupData> after = app.group().all();
         Assert.assertEquals(after.size(),before.size()+1);
 
-        group.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
-        before.add(group);
+//        group.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
+        group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
 
-        Comparator<? super GroupData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
-        before.sort(byID);
-        after.sort(byID);
+        before.add(group);
 
         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
         Assert.assertEquals(before, after);

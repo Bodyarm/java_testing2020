@@ -7,13 +7,14 @@ import ru.stqa.giv.addressbook.model.ContractData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContractDeletionTests extends TestBase{
 
     @BeforeMethod
     public void checkPreconditions(){
         app.goTo().homePage();
-        if (app.contract().list().isEmpty()){
+        if (app.contract().all().isEmpty()){
             app.contract().create(new ContractData().withFirstname("Check1").withMiddleName("Kus").withLastName("Dog lover").withNickName("LegNeck").withTitle("HOHOHO").withCompany("ClosedWay").withGroup("test1"));
         };
         app.goTo().homePage();
@@ -24,21 +25,18 @@ public class ContractDeletionTests extends TestBase{
     @Test
     public void testContractDeletion() throws Exception {
 
-        List<ContractData> before = app.contract().list();
-        System.out.println("Amount of contracts before deletion: "+ before.size());
+        Set<ContractData> before = app.contract().all();
 
-        app.contract().selectContract();
+        ContractData contractToDelete = before.iterator().next();
+
+        app.contract().selectContractById(contractToDelete.getId());
         app.contract().deleteSelectedContracts();
         app.contract().confirmContractDeletion();
+
         app.goTo().homePage();
 
-        before.remove(0);
-        List<ContractData> after = app.contract().list();
-        System.out.println("Amount of contract after deletion: "+after.size());
-
-        Comparator<? super ContractData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
-        before.sort(byID);
-        after.sort(byID);
+        before.remove(contractToDelete);
+        Set<ContractData> after = app.contract().all();
 
         Assert.assertEquals(before, after);
 

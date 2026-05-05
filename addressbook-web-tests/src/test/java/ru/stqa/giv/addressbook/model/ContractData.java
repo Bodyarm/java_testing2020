@@ -101,4 +101,12 @@ public class ContractData {
     }
 
 
+    @Override
+    public String toString() {
+        return "ContractData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
 }

@@ -7,8 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.giv.addressbook.model.ContractData;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ContractHelper  extends HelperBase{
 
@@ -45,6 +44,11 @@ public class ContractHelper  extends HelperBase{
 
     public void selectContract() {
         click(By.name("selected[]"));
+
+    }
+
+    public void selectContractById(int id) {
+        click(By.cssSelector(String.format("input[value='%s']", id)));
     }
 
     public void deleteSelectedContracts() {
@@ -88,4 +92,22 @@ public class ContractHelper  extends HelperBase{
         }
         return groups;
     }
+
+    public Set<ContractData> all() {
+        Set<ContractData> contracts = new HashSet<>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr[name='entry']"));
+
+        for (WebElement element : elements){
+
+            List<WebElement> columns = element.findElements(By.tagName("td"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+            String lastName = columns.get(1).getText();
+            String firstName = columns.get(2).getText();
+            ContractData contract = new ContractData().withId(id).withFirstname(firstName).withLastName(lastName);
+            contracts.add(contract);
+        }
+        return contracts;
+    }
+
+
 }

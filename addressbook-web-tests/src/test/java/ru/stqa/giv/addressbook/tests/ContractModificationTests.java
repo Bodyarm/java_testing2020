@@ -7,6 +7,7 @@ import ru.stqa.giv.addressbook.model.ContractData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContractModificationTests extends TestBase{
 
@@ -14,7 +15,15 @@ public class ContractModificationTests extends TestBase{
     public void checkPreconditions(){
         app.goTo().homePage();
         if (app.contract().list().isEmpty()){
-            app.contract().create(new ContractData().withFirstname("Check1").withMiddleName("Kus").withLastName("Dog lover").withNickName("LegNeck").withTitle("HOHOHO").withCompany("ClosedWay").withGroup("test1"));
+            app.contract().create(new ContractData()
+                    .withFirstname("Check1")
+                    .withMiddleName("Kus")
+                    .withLastName("Dog lover")
+                    .withNickName("LegNeck")
+                    .withTitle("HOHOHO")
+                    .withCompany("ClosedWay")
+                    .withGroup("test1")
+            );
         };
         app.goTo().homePage();
 
@@ -23,25 +32,25 @@ public class ContractModificationTests extends TestBase{
     @Test
     public void testContractModification() throws Exception {
 
-        List<ContractData> before = app.contract().list();
-        System.out.println("Amount of contracts before modification: "+ before.size());
+        Set<ContractData> before = app.contract().all();
+        ContractData contractToModify = before.iterator().next();
 
-        app.contract().selectContract();
+
+        before.remove(contractToModify);
+        System.out.println("id to modify = "+ contractToModify.getId());
+        System.out.println(before.size());
+
+
+        app.contract().selectContractById(contractToModify.getId());
         app.contract().initContractModification();
-        app.contract().fillContractForm(new ContractData().withFirstname("mod2").withMiddleName("mod3").withLastName("m0d14").withNickName("Vasiliii").withTitle("Mr").withCompany("PiffPaff"),false);
+        ContractData contractChanged = contractToModify.withFirstname("mod2").withLastName("mod3");
+
+        app.contract().fillContractForm(contractChanged,false);
         app.contract().submitContractModification();
         app.goTo().homePage();
 
-        before.get(0).withFirstname("mod2");
-        before.get(0).withLastName("m0d14");
-
-        List<ContractData> after = app.contract().list();
-        System.out.println("Amount of contracts after modification: "+ after.size());
-
-        Comparator<? super ContractData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
-        before.sort(byID);
-        after.sort(byID);
-
+        before.add(contractChanged);
+        Set<ContractData> after = app.contract().all();
         Assert.assertEquals(before, after);
 
 
