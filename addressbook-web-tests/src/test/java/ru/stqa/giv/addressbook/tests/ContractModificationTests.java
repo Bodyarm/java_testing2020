@@ -1,13 +1,18 @@
 package ru.stqa.giv.addressbook.tests;
 
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
+import ru.stqa.giv.addressbook.model.Contracts;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ContractModificationTests extends TestBase{
 
@@ -32,26 +37,18 @@ public class ContractModificationTests extends TestBase{
     @Test
     public void testContractModification() throws Exception {
 
-        Set<ContractData> before = app.contract().all();
+        Contracts before = app.contract().all();
         ContractData contractToModify = before.iterator().next();
-
-
-        before.remove(contractToModify);
-        System.out.println("id to modify = "+ contractToModify.getId());
-        System.out.println(before.size());
-
-
-        app.contract().selectContractById(contractToModify.getId());
-        app.contract().initContractModification();
         ContractData contractChanged = contractToModify.withFirstname("mod2").withLastName("mod3");
 
+        app.contract().initContractModificationById(contractChanged.getId());
         app.contract().fillContractForm(contractChanged,false);
         app.contract().submitContractModification();
         app.goTo().homePage();
 
-        before.add(contractChanged);
-        Set<ContractData> after = app.contract().all();
-        Assert.assertEquals(before, after);
+        Contracts after = app.contract().all();
+
+        assertThat(after, equalTo(before.withOut(contractToModify).withAdded(contractChanged)));
 
 
     }

@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.giv.addressbook.model.ContractData;
+import ru.stqa.giv.addressbook.model.Contracts;
 
 import java.util.*;
 
@@ -17,6 +18,10 @@ public class ContractHelper  extends HelperBase{
 
     public void initContractCreation() {
         click(By.linkText("add new"));
+    }
+
+    public void initContractModificationById(int id) {
+        click(By.cssSelector(String.format("a[href*='edit.php?id=%s']", id)));
     }
 
     public void fillContractForm(ContractData contractData, boolean creation) {
@@ -59,10 +64,6 @@ public class ContractHelper  extends HelperBase{
         wd.switchTo().alert().accept();
     }
 
-    public void initContractModification() {
-        click(By.xpath("//img[@alt='Edit']"));
-    }
-
     public void submitContractModification() {
         click(By.name("update"));
     }
@@ -93,8 +94,8 @@ public class ContractHelper  extends HelperBase{
         return groups;
     }
 
-    public Set<ContractData> all() {
-        Set<ContractData> contracts = new HashSet<>();
+    public Contracts all() {
+        Contracts contracts = new Contracts();
         List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr[name='entry']"));
 
         for (WebElement element : elements){
@@ -108,6 +109,7 @@ public class ContractHelper  extends HelperBase{
         }
         return contracts;
     }
+
 
 
 }

@@ -1,13 +1,12 @@
 package ru.stqa.giv.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
+import ru.stqa.giv.addressbook.model.Contracts;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContractDeletionTests extends TestBase{
 
@@ -25,20 +24,18 @@ public class ContractDeletionTests extends TestBase{
     @Test
     public void testContractDeletion() throws Exception {
 
-        Set<ContractData> before = app.contract().all();
+        Contracts before = app.contract().all();
 
         ContractData contractToDelete = before.iterator().next();
 
         app.contract().selectContractById(contractToDelete.getId());
         app.contract().deleteSelectedContracts();
         app.contract().confirmContractDeletion();
-
         app.goTo().homePage();
 
-        before.remove(contractToDelete);
-        Set<ContractData> after = app.contract().all();
+        Contracts after = app.contract().all();
 
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before.withOut(contractToDelete)));
 
     }
 }
