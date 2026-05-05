@@ -3,54 +3,19 @@ package ru.stqa.giv.addressbook.model;
 import java.util.Objects;
 
 public class ContractData {
-    private int id;
-    private  String firstname;
-    private final String middlename;
-    private  String lastname;
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    private final String nickname;
-    private final String title;
-    private final String company;
+    private int id = Integer.MAX_VALUE;
+    private String firstname;
+    private String middlename;
+    private String lastname;
+    private String nickname;
+    private String title;
+    private String company;
     private String group;
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getId() {
         return id;
     }
-
-    public ContractData(String firstname, String middlename, String lastname, String nickname, String title, String company, String group) {
-        this.firstname = firstname;
-        this.middlename = middlename;
-        this.lastname = lastname;
-        this.nickname = nickname;
-        this.title = title;
-        this.company = company;
-        this.group = group;
-        this.id = Integer.MAX_VALUE;
-    }
-
-    public ContractData(int id, String firstname, String lastname){
-        this.firstname=firstname;
-        this.lastname=lastname;
-        this.middlename = null;
-        this.nickname = null;
-        this.title = null;
-        this.company = null;
-        this.group = null;
-        this.id = id;
-    }
-
     public String getFirstname() {
         return firstname;
     }
@@ -76,6 +41,46 @@ public class ContractData {
     }
 
     public String getGroup() {return group;}
+
+    public ContractData withId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public ContractData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContractData withLastName(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContractData withMiddleName(String middlename) {
+        this.middlename = middlename;
+        return this;
+    }
+
+    public ContractData withNickName(String nickname) {
+        this.nickname = nickname;
+        return  this;
+    }
+
+    public ContractData withTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public ContractData withCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public ContractData  withGroup(String group) {
+        this.group = group;
+        return this;
+    }
 
 
     @Override

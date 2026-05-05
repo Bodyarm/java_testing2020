@@ -1,34 +1,36 @@
 package ru.stqa.jt2020.sandbox;
 
+
 import org.testng.annotations.Test;
+
 
 public class restoreknowledge {
 
 
-
-
     @Test
-    public void test1(){
+    public void test1() {
+        String s = "abcde";
+        String goal = "cdeab";
+        String smod = s;
+        boolean rotatePosible = false;
+        //Нужна проверка, что длины совпадают
+        //Проверка, что все символы из goal есть в s
+        //Если обе проверки проходят, то дальше уже крутишь
+        for(int i =1; i <=s.length();i++) {
+            smod = smod.substring(1, smod.length()) + smod.substring(0, 1);
+            System.out.println(smod);
 
-        int num = 121;
-        int kus = num;
-        int buf=0;
-        if(num <0 ){
-//            return false;
-            System.out.println(false);
-        }
-        while(kus>=10){
-            buf = buf*10 + kus%10;
-            kus = kus / 10;
+            if(smod.equals(goal)) {
+                rotatePosible=true;
+                break;
+            }
 
         }
-        buf = buf*10+kus;
-        if (buf ==num)
-//            return true;
-            System.out.println(true);
-        else
-//            return false;
-            System.out.println(false);
+
+        System.out.println(rotatePosible);
+
+
+
 
     }
 

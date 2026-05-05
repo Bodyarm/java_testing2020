@@ -17,13 +17,13 @@ public class GroupCreationTests extends TestBase {
         List<GroupData> before = app.group().list();
         System.out.println("Groups Amount is "+ before.size() );
 
-        GroupData group = new GroupData("testZ", null, null);
+        GroupData group = new GroupData().withName("testX");
         app.group().create(group);
         List<GroupData> after = app.group().list();
         System.out.println("Groups Amount is "+ after.size() );
         Assert.assertEquals(after.size(),before.size()+1);
 
-        group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
+        group.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId());
         before.add(group);
 
         Comparator<? super GroupData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());

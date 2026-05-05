@@ -83,7 +83,7 @@ public class ContractHelper  extends HelperBase{
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String lastName = columns.get(1).getText();
             String firstName = columns.get(2).getText();
-            ContractData contract = new ContractData(id, firstName, lastName);
+            ContractData contract = new ContractData().withId(id).withFirstname(firstName).withLastName(lastName);
             groups.add(contract);
         }
         return groups;

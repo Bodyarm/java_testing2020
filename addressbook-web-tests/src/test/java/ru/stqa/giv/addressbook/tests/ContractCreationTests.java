@@ -10,7 +10,7 @@ import java.util.List;
 public class ContractCreationTests extends TestBase {
 
     @Test
-    public void testContractCreation() throws Exception {
+    public void testContractCreation()  {
 
         app.goTo().homePage();
 
@@ -18,19 +18,25 @@ public class ContractCreationTests extends TestBase {
 
         app.contract().initContractCreation();
 
-        app.contract().create(new ContractData("check4", "test2", "test3", "test4", "test5", "test6","test1"));
+        app.contract().create(new ContractData().withFirstname("check").withMiddleName("test2").withLastName("test3").withNickName("test4").withTitle("Good title").withCompany("Dreamworks").withGroup("test1"));
         app.goTo().homePage();
 
         List<ContractData> after = app.contract().list();
 
-        ContractData newContract = new ContractData(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId(),"check4","test3");
+        ContractData newContract = new ContractData().withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(),o2.getId())).get().getId()).withFirstname("check").withLastName("test3");
         before.add(newContract);
 
         Comparator<? super ContractData> byID= (g1, g2) -> Integer.compare(g1.getId(),g2.getId());
         before.sort(byID);
         after.sort(byID);
 
+        System.out.println(before.toString());
+        System.out.println("----------------------");
+        System.out.println(after.toString());
+
         Assert.assertEquals(before, after);
+
+
 
         // Отсортировать before и after
         // Сравнить их Assert'ом

@@ -14,7 +14,7 @@ public class ContractModificationTests extends TestBase{
     public void checkPreconditions(){
         app.goTo().homePage();
         if (app.contract().list().isEmpty()){
-            app.contract().create(new ContractData("Check1", "Kus", "DOG_KILLER", "Tiiitle","DDDD", "OOO Lopata", "test1"));
+            app.contract().create(new ContractData().withFirstname("Check1").withMiddleName("Kus").withLastName("Dog lover").withNickName("LegNeck").withTitle("HOHOHO").withCompany("ClosedWay").withGroup("test1"));
         };
         app.goTo().homePage();
 
@@ -28,12 +28,12 @@ public class ContractModificationTests extends TestBase{
 
         app.contract().selectContract();
         app.contract().initContractModification();
-        app.contract().fillContractForm(new ContractData("mod2", "mod3", "m0d14", "Vasiliii", "Mr", "OOO Piff Paff",  null),false);
+        app.contract().fillContractForm(new ContractData().withFirstname("mod2").withMiddleName("mod3").withLastName("m0d14").withNickName("Vasiliii").withTitle("Mr").withCompany("PiffPaff"),false);
         app.contract().submitContractModification();
         app.goTo().homePage();
 
-        before.get(0).setFirstname("mod2");
-        before.get(0).setLastname("m0d14");
+        before.get(0).withFirstname("mod2");
+        before.get(0).withLastName("m0d14");
 
         List<ContractData> after = app.contract().list();
         System.out.println("Amount of contracts after modification: "+ after.size());
