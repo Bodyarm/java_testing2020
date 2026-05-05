@@ -19,7 +19,7 @@ public class ContractModificationTests extends TestBase{
     @BeforeMethod
     public void checkPreconditions(){
         app.goTo().homePage();
-        if (app.contract().list().isEmpty()){
+        if (app.contract().all().isEmpty()){
             app.contract().create(new ContractData()
                     .withFirstname("Check1")
                     .withMiddleName("Kus")

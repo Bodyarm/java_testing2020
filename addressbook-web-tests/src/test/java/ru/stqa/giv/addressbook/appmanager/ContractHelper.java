@@ -12,6 +12,8 @@ import java.util.*;
 
 public class ContractHelper  extends HelperBase{
 
+    private Contracts contractsCache = null;
+
     public ContractHelper(WebDriver wd) {
         super(wd);
     }
@@ -44,13 +46,9 @@ public class ContractHelper  extends HelperBase{
 
     public void submitContractCreation() {
         click(By.name("submit"));
+        cleanCache();
     }
 
-
-    public void selectContract() {
-        click(By.name("selected[]"));
-
-    }
 
     public void selectContractById(int id) {
         click(By.cssSelector(String.format("input[value='%s']", id)));
@@ -62,10 +60,12 @@ public class ContractHelper  extends HelperBase{
 
     public void confirmContractDeletion() {
         wd.switchTo().alert().accept();
+        cleanCache();
     }
 
     public void submitContractModification() {
         click(By.name("update"));
+        cleanCache();
     }
 
     public boolean isContractThere() {
@@ -78,24 +78,15 @@ public class ContractHelper  extends HelperBase{
         submitContractCreation();
     }
 
-    public List<ContractData> list() {
-        List<ContractData> groups = new ArrayList<ContractData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr[name='entry']"));
-
-        for (WebElement element : elements){
-
-            List<WebElement> columns = element.findElements(By.tagName("td"));
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            String lastName = columns.get(1).getText();
-            String firstName = columns.get(2).getText();
-            ContractData contract = new ContractData().withId(id).withFirstname(firstName).withLastName(lastName);
-            groups.add(contract);
-        }
-        return groups;
+    public void cleanCache(){
+        contractsCache = null;
     }
 
     public Contracts all() {
-        Contracts contracts = new Contracts();
+        if (contractsCache !=null){
+            return new Contracts(contractsCache);
+        }
+        contractsCache = new Contracts();
         List<WebElement> elements = wd.findElements(By.cssSelector("#maintable tr[name='entry']"));
 
         for (WebElement element : elements){
@@ -105,9 +96,9 @@ public class ContractHelper  extends HelperBase{
             String lastName = columns.get(1).getText();
             String firstName = columns.get(2).getText();
             ContractData contract = new ContractData().withId(id).withFirstname(firstName).withLastName(lastName);
-            contracts.add(contract);
+            contractsCache.add(contract);
         }
-        return contracts;
+        return new Contracts(contractsCache);
     }
 
 
