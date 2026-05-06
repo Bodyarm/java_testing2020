@@ -36,6 +36,11 @@ public class ContractHelper  extends HelperBase{
         type(By.name("home"),contractData.getPhoneHome());
         type(By.name("mobile"),contractData.getPhoneMobile());
         type(By.name("work"),contractData.getPhoneWork());
+        type(By.name("email"),contractData.getEmail1());
+        type(By.name("email2"),contractData.getEmail2());
+        type(By.name("email3"),contractData.getEmail3());
+        type(By.name("address"),contractData.getPostAddress());
+
         if (creation) {
             if ( contractData.getGroup() !=null) {
                     new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
@@ -98,33 +103,31 @@ public class ContractHelper  extends HelperBase{
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String lastName = columns.get(1).getText();
             String firstName = columns.get(2).getText();
-
+            ContractData contract = new ContractData().withId(id).withFirstname(firstName).withLastName(lastName);
             String[] allPhones = columns.get(5).getText().split("\n");
             String allPhonesTogether = columns.get(5).getText();
 
-            ContractData contract = new ContractData()
-                    .withId(id)
-                    .withFirstname(firstName)
-                    .withLastName(lastName);
 
             switch (allPhones.length){
-                case 0:
-                    break;
-                case 1:
-                    contract = contract.withPhoneHome(allPhones[0]);
-                    break;
-                case 2:
-                    contract = contract.withPhoneHome(allPhones[0])
-                                       .withPhoneMobile(allPhones[1]);
-                    break;
-                case 3:
-                    contract = contract.withPhoneHome(allPhones[0])
-                                       .withPhoneMobile(allPhones[1])
-                                       .withPhoneWork(allPhones[2]);
-                    break;
+                case 1: contract = contract.withPhoneHome(allPhones[0]);break;
+                case 2: contract = contract.withPhoneHome(allPhones[0]).withPhoneMobile(allPhones[1]);break;
+                case 3: contract = contract.withPhoneHome(allPhones[0]).withPhoneMobile(allPhones[1]).withPhoneWork(allPhones[2]);break;
             }
-
             contract = contract.withAllPhones(allPhonesTogether);
+
+            String[] allEmails = columns.get(4).getText().split("\n");
+            String allEmailsUnite = columns.get(4).getText();
+
+            switch (allEmails.length){
+                case 1: contract = contract.withEmail1(allEmails[0]); break;
+                case 2: contract = contract.withEmail1(allEmails[0]).withEmail2(allEmails[1]); break;
+                case 3: contract = contract.withEmail1(allEmails[0]).withEmail2(allEmails[1]).withEmail3(allEmails[2]); break;
+            }
+            contract = contract.withAllEmail(allEmailsUnite);
+
+
+            String contractAddress = columns.get(3).getText();
+            contract =contract.withPostAddress(contractAddress);
 
             contractsCache.add(contract);
         }
@@ -147,10 +150,13 @@ public class ContractHelper  extends HelperBase{
                 .withCompany(wd.findElement(By.name("company")).getAttribute("value"))
                 .withPhoneHome(wd.findElement(By.name("home")).getAttribute("value"))
                 .withPhoneMobile(wd.findElement(By.name("mobile")).getAttribute("value"))
-                .withPhoneWork(wd.findElement(By.name("work")).getAttribute("value"));
+                .withPhoneWork(wd.findElement(By.name("work")).getAttribute("value"))
+                .withEmail1(wd.findElement(By.name("email")).getAttribute("value"))
+                .withEmail2(wd.findElement(By.name("email2")).getAttribute("value"))
+                .withEmail3(wd.findElement(By.name("email3")).getAttribute("value"))
+                .withPostAddress(wd.findElement(By.name("address")).getText());
+
+
         return contract;
-
-
-
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContractsPhoneTests extends TestBase{
+public class ContractPhoneTests extends TestBase{
 
 
     @Test
@@ -43,6 +43,7 @@ public class ContractsPhoneTests extends TestBase{
         int maxId = after.stream().mapToInt((g)->g.getId()).max().getAsInt();
 
         contractToCreate = after.stream()
+
                 .filter(c -> c.getId() == maxId)
                 .findFirst()
                 .orElse(null);
@@ -72,7 +73,7 @@ public class ContractsPhoneTests extends TestBase{
          return Arrays.asList(contract.getPhoneHome(), contract.getPhoneMobile(), contract.getPhoneWork())
         .stream()
         .filter((s)->!s.equals(""))
-        .map(ContractsPhoneTests::cleanPhone)
+        .map(ContractPhoneTests::cleanPhone)
         .collect(Collectors.joining("\n"));
     }
 
