@@ -33,6 +33,9 @@ public class ContractHelper  extends HelperBase{
         type(By.name("nickname"),contractData.getNickname());
         type(By.name("title"),contractData.getTitle());
         type(By.name("company"),contractData.getCompany());
+        type(By.name("home"),contractData.getPhoneHome());
+        type(By.name("mobile"),contractData.getPhoneMobile());
+        type(By.name("work"),contractData.getPhoneWork());
         if (creation) {
             if ( contractData.getGroup() !=null) {
                     new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
@@ -95,7 +98,31 @@ public class ContractHelper  extends HelperBase{
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
             String lastName = columns.get(1).getText();
             String firstName = columns.get(2).getText();
-            ContractData contract = new ContractData().withId(id).withFirstname(firstName).withLastName(lastName);
+
+            String[] allPhones = columns.get(5).getText().split("\n");
+
+            ContractData contract = new ContractData()
+                    .withId(id)
+                    .withFirstname(firstName)
+                    .withLastName(lastName);
+
+            switch (allPhones.length){
+                case 0:
+                    break;
+                case 1:
+                    contract = contract.withPhoneHome(allPhones[0]);
+                    break;
+                case 2:
+                    contract = contract.withPhoneHome(allPhones[0])
+                                       .withPhoneMobile(allPhones[1]);
+                    break;
+                case 3:
+                    contract = contract.withPhoneHome(allPhones[0])
+                                       .withPhoneMobile(allPhones[1])
+                                       .withPhoneWork(allPhones[2]);
+                    break;
+            }
+
             contractsCache.add(contract);
         }
         return new Contracts(contractsCache);
@@ -104,5 +131,23 @@ public class ContractHelper  extends HelperBase{
 
     public int count() {
         return wd.findElements(By.cssSelector("input[name='selected[]']")).size();
+    }
+
+    public ContractData getContractFullDataByID(int id) {
+        initContractModificationById(id);
+        ContractData contract = new ContractData()
+                .withFirstname(wd.findElement(By.name("firstname")).getAttribute("value"))
+                .withMiddleName(wd.findElement(By.name("middlename")).getAttribute("value"))
+                .withLastName(wd.findElement(By.name("lastname")).getAttribute("value"))
+                .withNickName(wd.findElement(By.name("nickname")).getAttribute("value"))
+                .withTitle(wd.findElement(By.name("title")).getAttribute("value"))
+                .withCompany(wd.findElement(By.name("company")).getAttribute("value"))
+                .withPhoneHome(wd.findElement(By.name("home")).getAttribute("value"))
+                .withPhoneMobile(wd.findElement(By.name("mobile")).getAttribute("value"))
+                .withPhoneWork(wd.findElement(By.name("work")).getAttribute("value"));
+        return contract;
+
+
+
     }
 }
