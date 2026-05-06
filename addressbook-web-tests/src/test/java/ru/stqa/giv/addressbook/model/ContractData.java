@@ -11,7 +11,21 @@ public class ContractData {
     private String title;
     private String company;
     private String group;
+    private String phoneHome;
+    private String phoneMobile;
+    private String phoneWork;
 
+    public String getPhoneHome() {
+        return phoneHome;
+    }
+
+    public String getPhoneMobile() {
+        return phoneMobile;
+    }
+
+    public String getPhoneWork() {
+        return phoneWork;
+    }
 
     public int getId() {
         return id;
@@ -82,6 +96,20 @@ public class ContractData {
         return this;
     }
 
+    public ContractData withPhoneHome(String phoneHome){
+        this.phoneHome = phoneHome;
+        return this;
+    }
+
+    public ContractData withPhoneMobile(String phoneMobile){
+        this.phoneMobile = phoneMobile;
+        return this;
+    }
+
+    public ContractData withPhoneWork(String phoneWork){
+        this.phoneWork = phoneWork;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
