@@ -100,6 +100,7 @@ public class ContractHelper  extends HelperBase{
             String firstName = columns.get(2).getText();
 
             String[] allPhones = columns.get(5).getText().split("\n");
+            String allPhonesTogether = columns.get(5).getText();
 
             ContractData contract = new ContractData()
                     .withId(id)
@@ -122,6 +123,8 @@ public class ContractHelper  extends HelperBase{
                                        .withPhoneWork(allPhones[2]);
                     break;
             }
+
+            contract = contract.withAllPhones(allPhonesTogether);
 
             contractsCache.add(contract);
         }

@@ -12,8 +12,15 @@ public class ContractData {
     private String company;
     private String group;
     private String phoneHome;
-    private String phoneMobile;
-    private String phoneWork;
+    private String phoneMobile ="";
+    private String phoneWork ="";
+    private String allPhones ="";
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+
 
     public String getPhoneHome() {
         return phoneHome;
@@ -108,6 +115,11 @@ public class ContractData {
 
     public ContractData withPhoneWork(String phoneWork){
         this.phoneWork = phoneWork;
+        return this;
+    }
+
+    public ContractData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
         return this;
     }
 

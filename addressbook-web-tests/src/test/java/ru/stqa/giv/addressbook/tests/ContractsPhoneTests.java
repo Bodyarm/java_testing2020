@@ -4,14 +4,18 @@ import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+public class ContractsPhoneTests extends TestBase{
 
-public class ContractCreationTests extends TestBase {
 
     @Test
-    public void testContractCreation()  {
+    public void creationCheckPhone(){
 
         app.goTo().homePage();
         Contracts before = app.contract().all();
@@ -27,11 +31,12 @@ public class ContractCreationTests extends TestBase {
                 .withGroup("test1")
                 .withPhoneHome("+79117661844")
                 .withPhoneMobile("8(921)969-51-40")
-                .withPhoneWork("27-93")
+                //.withPhoneWork("27-93")
                 ;
         app.contract().create(contractToCreate);
         app.goTo().homePage();
 
+        //Check that arrays have equal size after adding new one
         assertThat(app.contract().count(), equalTo(before.size()+1));
         Contracts after = app.contract().all();
 
@@ -42,19 +47,34 @@ public class ContractCreationTests extends TestBase {
                 .findFirst()
                 .orElse(null);
 
+        //Check all contracts
         assertThat(after, equalTo(before.withAdded(contractToCreate)));
         ContractData contractFull =  app.contract().getContractFullDataByID(contractToCreate.getId());
         app.goTo().homePage();
 
+        //Check by every field
         assertThat(contractToCreate.getPhoneHome(),equalTo(cleanPhone(contractFull.getPhoneHome())));
         assertThat(contractToCreate.getPhoneMobile(),equalTo(cleanPhone(contractFull.getPhoneMobile())));
         assertThat(contractToCreate.getPhoneWork(),equalTo(cleanPhone(contractFull.getPhoneWork())));
 
+        //Check by joined Phones
+        assertThat(contractToCreate.getAllPhones(), equalTo(mergePhones(contractFull)));
+
+
     }
 
-    public String cleanPhone(String phone){
+    public static String cleanPhone(String phone){
         return phone.replaceAll("\\s","").replaceAll("[-()]","");
 
     }
+
+    private String mergePhones(ContractData contract){
+         return Arrays.asList(contract.getPhoneHome(), contract.getPhoneMobile(), contract.getPhoneWork())
+        .stream()
+        .filter((s)->!s.equals(""))
+        .map(ContractsPhoneTests::cleanPhone)
+        .collect(Collectors.joining("\n"));
+    }
+
 
 }
