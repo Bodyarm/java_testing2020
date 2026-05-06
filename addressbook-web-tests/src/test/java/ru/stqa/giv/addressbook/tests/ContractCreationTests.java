@@ -1,6 +1,7 @@
 package ru.stqa.giv.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
@@ -24,6 +25,7 @@ public class ContractCreationTests extends TestBase {
         app.contract().create(contractToCreate);
         app.goTo().homePage();
 
+        assertThat(app.contract().count(), equalTo(before.size()+1));
         Contracts after = app.contract().all();
 
         ContractData newContract = new ContractData()

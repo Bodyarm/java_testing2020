@@ -102,5 +102,7 @@ public class ContractHelper  extends HelperBase{
     }
 
 
-
+    public int count() {
+        return wd.findElements(By.cssSelector("input[name='selected[]']")).size();
+    }
 }

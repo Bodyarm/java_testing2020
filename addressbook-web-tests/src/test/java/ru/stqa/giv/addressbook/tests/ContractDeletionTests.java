@@ -33,6 +33,7 @@ public class ContractDeletionTests extends TestBase{
         app.contract().confirmContractDeletion();
         app.goTo().homePage();
 
+        assertThat(app.contract().count(),equalTo(before.size()-1));
         Contracts after = app.contract().all();
 
         assertThat(after, equalTo(before.withOut(contractToDelete)));

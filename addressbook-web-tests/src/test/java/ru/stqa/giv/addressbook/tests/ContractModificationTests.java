@@ -46,6 +46,7 @@ public class ContractModificationTests extends TestBase{
         app.contract().submitContractModification();
         app.goTo().homePage();
 
+        assertThat(app.contract().count(),equalTo(before.size()));
         Contracts after = app.contract().all();
 
         assertThat(after, equalTo(before.withOut(contractToModify).withAdded(contractChanged)));
