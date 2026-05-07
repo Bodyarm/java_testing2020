@@ -1,6 +1,5 @@
 package ru.stqa.giv.addressbook.model;
 
-import java.nio.file.attribute.GroupPrincipal;
 import java.util.Objects;
 
 public class GroupData {
@@ -35,7 +34,7 @@ public class GroupData {
         return this;
     }
 
-    public GroupData withHeater(String header) {
+    public GroupData withHeader(String header) {
         this.header = header;
         return this;
     }
