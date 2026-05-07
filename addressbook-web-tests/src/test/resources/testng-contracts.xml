@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="address-book" verbose="1">
+    <test name="Contracts">
+        <classes>
+            <class name="ru.stqa.giv.addressbook.tests.ContractAddressTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.ContractPhoneTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.ContractAddressTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.ContractDeletionTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.ContractEmailTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.ContractModificationTests"/>
+        </classes>
+    </test>
+</suite>
