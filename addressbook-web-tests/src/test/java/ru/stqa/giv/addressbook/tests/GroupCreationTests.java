@@ -1,5 +1,6 @@
 package ru.stqa.giv.addressbook.tests;
 
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,7 +41,27 @@ public class GroupCreationTests extends TestBase {
         return list.iterator();
     }
 
-    @Test(dataProvider = "groupList2")
+    @DataProvider
+    public Iterator<Object[]> groupList3() throws IOException {
+        List<Object[]> list = new ArrayList<>();
+        String xml ="";
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/group.xml")));
+        String line = reader.readLine();
+        while(line !=null){
+            xml +=line;
+            line = reader.readLine();
+        }
+        XStream xstream = new XStream();
+        xstream.processAnnotations(GroupData.class);
+        xstream.allowTypesByWildcard(new String[] {
+                "ru.stqa.giv.addressbook.model.*"
+        });
+        List<GroupData> groups;
+        groups = (List<GroupData>) xstream.fromXML(xml);
+        return  groups.stream().map(g-> new Object[] {g}).toList().iterator();
+    }
+
+    @Test(dataProvider = "groupList3")
     public void testGroupCreation(GroupData group) throws Exception {
 
         app.goTo().groupPage();
