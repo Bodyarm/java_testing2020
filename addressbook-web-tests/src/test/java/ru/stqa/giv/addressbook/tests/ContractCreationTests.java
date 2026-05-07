@@ -31,6 +31,7 @@ public class ContractCreationTests extends TestBase {
             xml +=line;
             line = reader.readLine();
         }
+        reader.close();
         XStream xstream = new XStream();
         xstream.processAnnotations(ContractData.class);
         xstream.allowTypesByWildcard(new String[] {

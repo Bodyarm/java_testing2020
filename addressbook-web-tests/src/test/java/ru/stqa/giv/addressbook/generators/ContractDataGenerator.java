@@ -60,9 +60,10 @@ public class ContractDataGenerator {
         xStream.processAnnotations(ContractData.class);
         xStream.alias("contract", ContractData.class);
         String xml = xStream.toXML(contracts);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        //auto-close file by using try option
+        try (Writer writer = new FileWriter(file);){
+            writer.write(xml);
+        }
     }
 
     private void saveAsCSV(List<ContractData> contracts, File file) throws IOException {
