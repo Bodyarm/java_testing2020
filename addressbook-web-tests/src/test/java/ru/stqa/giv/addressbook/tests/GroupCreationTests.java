@@ -1,5 +1,7 @@
 package ru.stqa.giv.addressbook.tests;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,8 +12,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,7 +42,7 @@ public class GroupCreationTests extends TestBase {
     }
 
     @DataProvider
-    public Iterator<Object[]> groupList3() throws IOException {
+    public Iterator<Object[]> groupFromXML() throws IOException {
         List<Object[]> list = new ArrayList<>();
         String xml ="";
         BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/group.xml")));
@@ -61,7 +61,24 @@ public class GroupCreationTests extends TestBase {
         return  groups.stream().map(g-> new Object[] {g}).toList().iterator();
     }
 
-    @Test(dataProvider = "groupList3")
+    @DataProvider
+    public Iterator<Object[]> groupFromJSON() throws IOException {
+        List<Object[]> list = new ArrayList<>();
+        String json ="";
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/group.json")));
+        String line = reader.readLine();
+        while(line !=null){
+            json +=line;
+            line = reader.readLine();
+        }
+        Gson gson = new Gson();
+        List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
+        return  groups.stream().map(g-> new Object[] {g}).toList().iterator();
+    }
+
+
+
+    @Test(dataProvider = "groupFromJSON")
     public void testGroupCreation(GroupData group) throws Exception {
 
         app.goTo().groupPage();
