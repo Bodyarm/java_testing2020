@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
 import ru.stqa.giv.addressbook.model.Groups;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,21 @@ public class GroupCreationTests extends TestBase {
         return list.iterator();
     }
 
-    @Test(dataProvider = "groupList")
+    @DataProvider
+    public Iterator<Object[]> groupList2() throws IOException {
+        List<Object[]> list = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/group.csv")));
+        String line = reader.readLine();
+        while(line !=null){
+            String data[] = line.split(";");
+            list.add(new Object[]{new GroupData().withName(data[0]).withHeader(data[1]).withFooter(data[2])});
+            line = reader.readLine();
+        }
+
+        return list.iterator();
+    }
+
+    @Test(dataProvider = "groupList2")
     public void testGroupCreation(GroupData group) throws Exception {
 
         app.goTo().groupPage();
