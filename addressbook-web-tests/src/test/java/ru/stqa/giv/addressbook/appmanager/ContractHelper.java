@@ -40,6 +40,8 @@ public class ContractHelper  extends HelperBase{
         type(By.name("email2"),contractData.getEmail2());
         type(By.name("email3"),contractData.getEmail3());
         type(By.name("address"),contractData.getPostAddress());
+        System.out.println(contractData.getPhoto().getAbsolutePath());
+        attachFile(By.name("photo"), contractData.getPhoto());
 
         if (creation) {
             if ( contractData.getGroup() !=null) {

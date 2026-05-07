@@ -1,5 +1,7 @@
 package ru.stqa.giv.addressbook.model;
 
+import java.io.File;
+import java.security.PrivateKey;
 import java.util.Objects;
 
 public class ContractData {
@@ -20,6 +22,11 @@ public class ContractData {
     private String email3 = "";
     private String allEmails ="";
     private String postaddress = "";
+    private File photo;
+
+    public File getPhoto() {
+        return photo;
+    }
 
     public String getPostAddress(){
         return this.postaddress;
@@ -170,7 +177,10 @@ public class ContractData {
         return this;
     }
 
-
+    public ContractData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

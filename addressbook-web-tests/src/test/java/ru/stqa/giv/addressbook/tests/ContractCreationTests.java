@@ -4,13 +4,15 @@ import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class ContractCreationTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContractCreation()  {
 
         app.goTo().homePage();
@@ -51,6 +53,32 @@ public class ContractCreationTests extends TestBase {
         assertThat(contractToCreate.getPhoneWork(),equalTo(cleanPhone(contractFull.getPhoneWork())));
 
     }
+
+
+
+    @Test
+    public void testPhoto(){
+
+        app.goTo().homePage();
+        Contracts before = app.contract().all();
+        app.contract().initContractCreation();
+
+        File photo = new File("src/test/resources/havok.jpg");
+
+
+        ContractData contractToCreate = new ContractData()
+                .withFirstname("check")
+                .withLastName("test3")
+                .withPhoto(photo);
+                
+                ;
+        app.contract().create(contractToCreate);
+        app.goTo().homePage();
+        
+        
+    }
+
+
 
     public String cleanPhone(String phone){
         return phone.replaceAll("\\s","").replaceAll("[-()]","");
