@@ -1,0 +1,17 @@
+<list>
+  <contract>
+    <firstname>FirstName 0</firstname>
+    <lastname>lastname 0</lastname>
+    <postaddress>Bakers street 0</postaddress>
+  </contract>
+  <contract>
+    <firstname>FirstName 1</firstname>
+    <lastname>lastname 1</lastname>
+    <postaddress>Bakers street 1</postaddress>
+  </contract>
+  <contract>
+    <firstname>FirstName 2</firstname>
+    <lastname>lastname 2</lastname>
+    <postaddress>Bakers street 2</postaddress>
+  </contract>
+</list>

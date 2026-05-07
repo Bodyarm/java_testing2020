@@ -1,27 +1,49 @@
 package ru.stqa.giv.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import java.io.File;
-import java.security.PrivateKey;
 import java.util.Objects;
 
+@XStreamAlias("contract")
 public class ContractData {
+    @XStreamOmitField
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstname;
+    @XStreamOmitField
     private String middlename;
+    @Expose
     private String lastname;
+    @XStreamOmitField
     private String nickname;
+    @XStreamOmitField
     private String title;
+    @XStreamOmitField
     private String company;
+    @XStreamOmitField
     private String group;
+    @XStreamOmitField
     private String phoneHome;
+    @XStreamOmitField
     private String phoneMobile ="";
+    @XStreamOmitField
     private String phoneWork ="";
+    @XStreamOmitField
     private String allPhones ="";
+    @XStreamOmitField
     private String email1 = "";
+    @XStreamOmitField
     private String email2 = "";
+    @XStreamOmitField
     private String email3 = "";
+    @XStreamOmitField
     private String allEmails ="";
+    @Expose
     private String postaddress = "";
+    @XStreamOmitField
     private File photo;
 
     public File getPhoto() {
