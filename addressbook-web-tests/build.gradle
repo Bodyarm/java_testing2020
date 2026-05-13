@@ -7,11 +7,11 @@ repositories {
 dependencies {
     implementation "org.testng:testng:7.12.0"
     implementation("org.seleniumhq.selenium:selenium-java:4.43.0")
-    implementation 'org.slf4j:slf4j-nop:2.0.17'
-    testImplementation("org.hamcrest:hamcrest:3.0") // Source: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-    runtimeOnly("org.jcommander:jcommander:3.0") // Source: https://mvnrepository.com/artifact/org.jcommander/jcommander
+    testImplementation("org.hamcrest:hamcrest:3.0")           // Source: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+    runtimeOnly("org.jcommander:jcommander:3.0")              // Source: https://mvnrepository.com/artifact/org.jcommander/jcommander
     implementation("com.thoughtworks.xstream:xstream:1.4.21") // Source: https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
-    implementation("com.google.code.gson:gson:2.14.0") // Source: https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.14.0")        // Source: https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("ch.qos.logback:logback-classic:1.5.32")   // Source: https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
 }
 
 task testGroups(type: Test) {

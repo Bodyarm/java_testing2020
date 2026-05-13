@@ -1,5 +1,8 @@
 package ru.stqa.giv.addressbook.tests;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
@@ -12,8 +15,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 public class ContractEmailTests extends TestBase {
 
+    Logger logger = LoggerFactory.getLogger(ContractEmailTests.class);
+
+
     @BeforeMethod
     public void checkPreconditions(){
+        logger.info("Check that contracts with e-mail exists.");
+
         app.goTo().homePage();
 
         Contracts before = app.contract().all();
@@ -51,10 +59,7 @@ public class ContractEmailTests extends TestBase {
 
         ContractData contractFromDetails = app.contract().getContractFullDataByID(contractRandom.getId());
 
-
-        System.out.println(contractRandom.getAllEmails());
-        System.out.println("-----------");
-        System.out.println(contractFromDetails.getEmail1() + contractFromDetails.getEmail2() + contractFromDetails.getEmail3());
+        logger.info("Assert E-mail checks");
         assertThat(contractRandom.getAllEmails(),equalTo(mergeEmails(contractFromDetails)));
    }
 
