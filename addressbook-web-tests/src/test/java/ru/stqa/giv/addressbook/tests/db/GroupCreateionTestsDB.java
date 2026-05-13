@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.db;
 
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
