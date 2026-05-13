@@ -13,6 +13,7 @@
     <property name="show_sql">true</property>
     <property name="hbm2ddl.auto">validate</property>
     <mapping class="ru.stqa.giv.addressbook.model.GroupData"/>
+    <mapping class="ru.stqa.giv.addressbook.model.ContractData"/>
 
 </session-factory>
 </hibernate-configuration>

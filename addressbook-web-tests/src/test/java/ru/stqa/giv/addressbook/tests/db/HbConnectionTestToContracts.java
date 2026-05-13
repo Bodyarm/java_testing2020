@@ -7,11 +7,12 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.GroupData;
 
 import java.util.List;
 
-public class HbConnectionTest {
+public class HbConnectionTestToContracts {
 
     private SessionFactory sessionFactory;
 
@@ -35,9 +36,12 @@ public class HbConnectionTest {
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<GroupData> result = session.createQuery("from GroupData").list();
-        for( GroupData group : result){
-            System.out.println(group);
+        List<ContractData> result = session.createQuery("from ContractData where LENGTH(phoneHome)!=0").list();
+        System.out.println("Founded " + result.size()+ " contracts with phoneHome:");
+        for( ContractData contract : result){
+            System.out.print(contract);
+            System.out.println(contract.getPhoneHome());
+
         }
         session.getTransaction().commit();
         session.close();

@@ -3,51 +3,73 @@ package ru.stqa.giv.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import jakarta.persistence.*;
 
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contract")
+@Entity
+@Table(name="addressbook")
 public class ContractData {
     @XStreamOmitField
+    @Id
+    @Column(name="id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name="firstname")
     private String firstname;
     @XStreamOmitField
+    @Transient
     private String middlename;
     @Expose
+    @Column(name="lastname")
     private String lastname;
     @XStreamOmitField
+    @Transient
     private String nickname;
     @XStreamOmitField
+    @Transient
     private String title;
     @XStreamOmitField
+    @Transient
     private String company;
     @XStreamOmitField
+    @Transient
     private String group;
     @XStreamOmitField
+    @Column(name="home", columnDefinition = "TEXT")
     private String phoneHome;
     @XStreamOmitField
+    @Column(name="mobile",columnDefinition = "TEXT")
     private String phoneMobile ="";
     @XStreamOmitField
+    @Column(name="work",columnDefinition = "TEXT")
     private String phoneWork ="";
     @XStreamOmitField
+    @Transient
     private String allPhones ="";
     @XStreamOmitField
+    @Transient
     private String email1 = "";
     @XStreamOmitField
+    @Transient
     private String email2 = "";
     @XStreamOmitField
+    @Transient
     private String email3 = "";
     @XStreamOmitField
+    @Transient
     private String allEmails ="";
     @Expose
+    @Transient
     private String postaddress = "";
     @XStreamOmitField
-    private File photo;
+    @Column(name="photo", columnDefinition = "TEXT")
+    private String photo;
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public String getPostAddress(){
@@ -200,7 +222,7 @@ public class ContractData {
     }
 
     public ContractData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
