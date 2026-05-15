@@ -1,9 +1,10 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.groups;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
 import ru.stqa.giv.addressbook.model.Groups;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

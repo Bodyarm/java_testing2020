@@ -66,7 +66,7 @@ public class ContractData {
     private String postaddress = "";
     @XStreamOmitField
     @Column(name="photo", columnDefinition = "TEXT")
-    private String photo;
+    private String photo="";
 
     public File getPhoto() {
         return new File(photo);

@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.contracts;
 
 
 import org.slf4j.Logger;
@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

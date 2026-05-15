@@ -3,12 +3,12 @@
 <suite name="address-book" verbose="1">
     <test name="Contracts">
         <classes>
-            <class name="ru.stqa.giv.addressbook.tests.ContractAddressTests"/>
-            <class name="ru.stqa.giv.addressbook.tests.ContractPhoneTests"/>
-            <class name="ru.stqa.giv.addressbook.tests.ContractAddressTests"/>
-            <class name="ru.stqa.giv.addressbook.tests.ContractDeletionTests"/>
-            <class name="ru.stqa.giv.addressbook.tests.ContractEmailTests"/>
-            <class name="ru.stqa.giv.addressbook.tests.ContractModificationTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.contracts.ContractAddressTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.contracts.ContractPhoneTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.contracts.ContractAddressTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.contracts.ContractDeletionTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.contracts.ContractEmailTests"/>
+            <class name="ru.stqa.giv.addressbook.tests.contracts.ContractModificationTests"/>
         </classes>
     </test>
 </suite>

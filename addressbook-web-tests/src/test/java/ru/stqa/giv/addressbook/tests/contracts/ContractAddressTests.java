@@ -1,14 +1,15 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.contracts;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContractAddressTests extends TestBase{
+public class ContractAddressTests extends TestBase {
 
     @BeforeMethod
     public void prepare(){

@@ -1,11 +1,11 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.contracts;
 
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
-import ru.stqa.giv.addressbook.model.GroupData;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import java.io.BufferedReader;
 import java.io.File;

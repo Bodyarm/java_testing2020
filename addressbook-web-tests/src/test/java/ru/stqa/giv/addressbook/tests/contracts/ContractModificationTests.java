@@ -1,20 +1,15 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.contracts;
 
-import org.hamcrest.MatcherAssert;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ContractModificationTests extends TestBase{
+public class ContractModificationTests extends TestBase {
 
     @BeforeMethod
     public void checkPreconditions(){

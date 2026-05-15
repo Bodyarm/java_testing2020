@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests;
+package ru.stqa.giv.addressbook.tests.groups;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -7,6 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
 import ru.stqa.giv.addressbook.model.Groups;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import java.io.*;
 import java.util.ArrayList;
