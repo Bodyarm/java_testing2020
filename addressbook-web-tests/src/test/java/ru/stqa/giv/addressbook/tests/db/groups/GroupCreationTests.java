@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.groups;
+package ru.stqa.giv.addressbook.tests.db.groups;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,7 +9,10 @@ import ru.stqa.giv.addressbook.model.GroupData;
 import ru.stqa.giv.addressbook.model.Groups;
 import ru.stqa.giv.addressbook.tests.TestBase;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -79,17 +82,16 @@ public class GroupCreationTests extends TestBase {
 
 
 
-    @Test(dataProvider = "groupFromJSON", enabled = false)
-    //Развалится из-за расширенного equals в классе Groups
+    @Test(dataProvider = "groupFromJSON")
     public void testGroupCreation(GroupData group) throws Exception {
 
-        app.goTo().groupPage();
-        Groups before = app.group().all();
+        Groups before = app.db().groups();
 
+        app.goTo().groupPage();
         app.group().create(group);
 
         assertThat(app.group().count(), equalTo(before.size()+1));
-        Groups after = app.group().all();
+        Groups after = app.db().groups();
         assertThat(after, equalTo(before.withAdded(group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
 
     }

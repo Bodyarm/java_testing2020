@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.db;
+package ru.stqa.giv.addressbook.tests.db.groups;
 
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.GroupData;
@@ -6,12 +6,12 @@ import ru.stqa.giv.addressbook.model.Groups;
 
 import java.sql.*;
 
-public class GroupCreateionTestsDB {
+public class GroupCheckDBConnection {
 
 
 
     @Test
-    public void testDBConnection() {
+    public void testSingleGroup() {
 
         Connection conn = null;
         try {

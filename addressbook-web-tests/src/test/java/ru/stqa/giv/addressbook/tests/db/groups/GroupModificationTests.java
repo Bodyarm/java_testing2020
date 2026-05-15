@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.groups;
+package ru.stqa.giv.addressbook.tests.db.groups;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,23 +14,22 @@ public class GroupModificationTests extends TestBase {
 
     @BeforeMethod
     public void checkPreconditions(){
-        app.goTo().groupPage();
-        if (app.group().all().isEmpty()){
+        if(app.db().groups().isEmpty()){
+            app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
         }
     }
 
-    @Test(enabled = false)
-    //Развалится из-за расширенного equals в классе Groups
+    @Test
     public void testGroupModification(){
-
-        Groups before = app.group().all();
+        app.goTo().groupPage();
+        Groups before = app.db().groups();
         GroupData groupToModify = before.iterator().next();
         GroupData group = new GroupData().withId(groupToModify.getId()).withName("mod1").withFooter("mod2").withHeader("mod3");
         app.group().modify(group);
 
         assertThat(app.group().count(),equalTo(before.size()));
-        Groups after = app.group().all();
+        Groups after = app.db().groups();
 
         assertThat(after,equalTo(before.withOut(groupToModify).withAdded(group)));
 

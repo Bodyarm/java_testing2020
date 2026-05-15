@@ -79,13 +79,15 @@ public class GroupData {
         if (o == null || getClass() != o.getClass()) return false;
 
         GroupData groupData = (GroupData) o;
-        return id == groupData.id && Objects.equals(name, groupData.name);
+        return id == groupData.id && Objects.equals(name, groupData.name) && Objects.equals(header, groupData.header) && Objects.equals(footer, groupData.footer);
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + Objects.hashCode(name);
+        result = 31 * result + Objects.hashCode(header);
+        result = 31 * result + Objects.hashCode(footer);
         return result;
     }
 }

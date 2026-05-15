@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.groups;
+package ru.stqa.giv.addressbook.tests.db.groups;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -13,22 +13,20 @@ public class GroupDeletionTests extends TestBase {
 
   @BeforeMethod
   public void checkPreconditions(){
+
     app.goTo().groupPage();
-    if (app.group().all().size()==0){
+    if (app.db().groups().isEmpty()){
       app.group().create(new GroupData().withName("test1"));
     }
   }
 
-  @Test(enabled = false)
-  //Развалится из-за расширенного equals в классе Groups
+  @Test
   public void testGroupDeletion() throws Exception {
-
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     GroupData groupToDelete = before.iterator().next();
     app.group().delete(groupToDelete);
-
     assertThat(app.group().count(),equalTo(before.size()-1));
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
     assertThat(after, equalTo(before.withOut(groupToDelete)));
 
 
