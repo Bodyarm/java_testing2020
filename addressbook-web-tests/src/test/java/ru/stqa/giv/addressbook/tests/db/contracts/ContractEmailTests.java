@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.contracts;
+package ru.stqa.giv.addressbook.tests.db.contracts;
 
 
 import org.slf4j.Logger;
@@ -18,18 +18,14 @@ public class ContractEmailTests extends TestBase {
 
     Logger logger = LoggerFactory.getLogger(ContractEmailTests.class);
 
-
     @BeforeMethod
     public void checkPreconditions(){
-        logger.info("Check that contracts with e-mail exists.");
-
         app.goTo().homePage();
-
-        Contracts before = app.contract().all();
+        Contracts before = app.db().contracts();
 
         int amount = (int) before
                 .stream()
-                .filter((s) -> !s.getAllEmails().equals(""))
+                .filter((s) -> s.getEmail1().length() >1 & s.getEmail2().length()>1 & s.getEmail3().length()>1)
                 .count();
 
         if (amount ==0 ){
@@ -52,17 +48,18 @@ public class ContractEmailTests extends TestBase {
     }
 
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void emailTest1(){
 
-        Contracts before = app.contract().all();
-        ContractData contractRandom = before.stream().filter(s->!s.getAllEmails().equals("")).iterator().next();
-
+        Contracts before = app.db().contracts();
+        ContractData contractRandom = before.stream().filter(s->s.getEmail1().length()>1).iterator().next();
         ContractData contractFromDetails = app.contract().getContractFullDataByID(contractRandom.getId());
 
-        logger.info("Assert E-mail checks");
-        assertThat(contractRandom.getAllEmails(),equalTo(mergeEmails(contractFromDetails)));
+        logger.info("Assert E-mail checks for contract with ID="+contractRandom.getId());
+        assertThat(contractRandom.getEmail1(),equalTo(contractFromDetails.getEmail1()));
+        assertThat(contractRandom.getEmail2(),equalTo(contractFromDetails.getEmail2()));
+        assertThat(contractRandom.getEmail3(),equalTo(contractFromDetails.getEmail3()));
+
    }
 
     private String mergeEmails(ContractData contract){

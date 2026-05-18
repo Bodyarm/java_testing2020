@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.contracts;
+package ru.stqa.giv.addressbook.tests.db.contracts;
 
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.DataProvider;
@@ -42,18 +42,17 @@ public class ContractCreationTests extends TestBase {
         return  contracts.stream().map(g-> new Object[] {g}).toList().iterator();
     }
 
-    @Test(dataProvider = "groupFromXML",enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test(dataProvider = "groupFromXML")
     public void testFromXML(ContractData contractToCreate){
         app.goTo().homePage();
-        Contracts before = app.contract().all();
+        Contracts before = app.db().contracts();
 
         app.contract().initContractCreation();
         app.contract().create(contractToCreate);
         app.goTo().homePage();
 
         assertThat(app.contract().count(), equalTo(before.size()+1));
-        Contracts after = app.contract().all();
+        Contracts after = app.db().contracts();
 
         int maxId = after.stream().mapToInt((g)->g.getId()).max().getAsInt();
 
@@ -74,12 +73,11 @@ public class ContractCreationTests extends TestBase {
 
 
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void testContractCreation()  {
 
         app.goTo().homePage();
-        Contracts before = app.contract().all();
+        Contracts before = app.db().contracts();
 
         app.contract().initContractCreation();
         ContractData contractToCreate = new ContractData()
@@ -98,7 +96,7 @@ public class ContractCreationTests extends TestBase {
         app.goTo().homePage();
 
         assertThat(app.contract().count(), equalTo(before.size()+1));
-        Contracts after = app.contract().all();
+        Contracts after = app.db().contracts();
 
         int maxId = after.stream().mapToInt((g)->g.getId()).max().getAsInt();
 
@@ -111,16 +109,15 @@ public class ContractCreationTests extends TestBase {
         ContractData contractFull =  app.contract().getContractFullDataByID(contractToCreate.getId());
         app.goTo().homePage();
 
-        assertThat(contractToCreate.getPhoneHome(),equalTo(cleanPhone(contractFull.getPhoneHome())));
-        assertThat(contractToCreate.getPhoneMobile(),equalTo(cleanPhone(contractFull.getPhoneMobile())));
-        assertThat(contractToCreate.getPhoneWork(),equalTo(cleanPhone(contractFull.getPhoneWork())));
+        assertThat(contractToCreate.getPhoneHome(),equalTo(contractFull.getPhoneHome()));
+        assertThat(contractToCreate.getPhoneMobile(),equalTo(contractFull.getPhoneMobile()));
+        assertThat(contractToCreate.getPhoneWork(),equalTo(contractFull.getPhoneWork()));
 
     }
 
 
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void testPhoto(){
 
         app.goTo().homePage();

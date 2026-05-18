@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.contracts;
+package ru.stqa.giv.addressbook.tests.db.contracts;
 
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
@@ -8,19 +8,17 @@ import ru.stqa.giv.addressbook.tests.TestBase;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContractPhoneTests extends TestBase {
 
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void creationCheckPhone(){
 
         app.goTo().homePage();
-        Contracts before = app.contract().all();
+        Contracts before = app.db().contracts();
 
         app.contract().initContractCreation();
         ContractData contractToCreate = new ContractData()
@@ -33,19 +31,18 @@ public class ContractPhoneTests extends TestBase {
                 .withGroup("test1")
                 .withPhoneHome("+79117661844")
                 .withPhoneMobile("8(921)969-51-40")
-                //.withPhoneWork("27-93")
+                .withPhoneWork("27-93")
                 ;
         app.contract().create(contractToCreate);
         app.goTo().homePage();
 
         //Check that arrays have equal size after adding new one
         assertThat(app.contract().count(), equalTo(before.size()+1));
-        Contracts after = app.contract().all();
+        Contracts after = app.db().contracts();
 
         int maxId = after.stream().mapToInt((g)->g.getId()).max().getAsInt();
 
         contractToCreate = after.stream()
-
                 .filter(c -> c.getId() == maxId)
                 .findFirst()
                 .orElse(null);
@@ -56,12 +53,11 @@ public class ContractPhoneTests extends TestBase {
         app.goTo().homePage();
 
         //Check by every field
-        assertThat(contractToCreate.getPhoneHome(),equalTo(cleanPhone(contractFull.getPhoneHome())));
-        assertThat(contractToCreate.getPhoneMobile(),equalTo(cleanPhone(contractFull.getPhoneMobile())));
-        assertThat(contractToCreate.getPhoneWork(),equalTo(cleanPhone(contractFull.getPhoneWork())));
+        logger.info("Check phones for contract with ID"+ contractToCreate.getId());
+        assertThat(contractToCreate.getPhoneHome(),equalTo(contractFull.getPhoneHome()));
+        assertThat(contractToCreate.getPhoneMobile(),equalTo(contractFull.getPhoneMobile()));
+        assertThat(contractToCreate.getPhoneWork(),equalTo(contractFull.getPhoneWork()));
 
-        //Check by joined Phones
-        assertThat(contractToCreate.getAllPhones(), equalTo(mergePhones(contractFull)));
 
 
     }

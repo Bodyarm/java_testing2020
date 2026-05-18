@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.contracts;
+package ru.stqa.giv.addressbook.tests.db.contracts;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,14 +14,14 @@ public class ContractAddressTests extends TestBase {
     @BeforeMethod
     public void prepare(){
         app.goTo().homePage();
-         Contracts before = app.contract().all();
+        Contracts before = app.db().contracts();
 
         int amount = (int) before
                 .stream()
                 .filter((s) -> !s.getPostAddress().equals(""))
                 .count();
 
-        System.out.println("Count"+ amount);
+        logger.info("Найдено контрактов с адресом: {}", amount);
 
         if (amount ==0 ){
             app.contract().create(new ContractData()
@@ -35,13 +35,12 @@ public class ContractAddressTests extends TestBase {
 
 
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void addressTest1(){
-        Contracts after = app.contract().all();
+        Contracts after = app.db().contracts();
         ContractData contractWithAddress = after.stream().filter(s->!s.getPostAddress().equals("")).iterator().next();
         ContractData contractWithAddressFromDetails = app.contract().getContractFullDataByID(contractWithAddress.getId());
-
+        logger.info("Address field is '{}'",contractWithAddress.getPostAddress());
         assertThat(contractWithAddress.getPostAddress(), equalTo(contractWithAddressFromDetails.getPostAddress()));
 
     }

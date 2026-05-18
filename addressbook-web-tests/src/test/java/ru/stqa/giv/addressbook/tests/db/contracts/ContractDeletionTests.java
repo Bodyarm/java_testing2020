@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.contracts;
+package ru.stqa.giv.addressbook.tests.db.contracts;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,11 +10,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContractDeletionTests extends TestBase {
-
     @BeforeMethod
     public void checkPreconditions(){
         app.goTo().homePage();
-        if (app.contract().all().isEmpty()){
+        if (app.db().contracts().isEmpty()){
             app.contract().create(new ContractData().withFirstname("Check1").withMiddleName("Kus").withLastName("Dog lover").withNickName("LegNeck").withTitle("HOHOHO").withCompany("ClosedWay").withGroup("test1"));
         };
         app.goTo().homePage();
@@ -22,12 +21,10 @@ public class ContractDeletionTests extends TestBase {
     }
 
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void testContractDeletion() throws Exception {
 
-        Contracts before = app.contract().all();
-
+        Contracts before = app.db().contracts();
         ContractData contractToDelete = before.iterator().next();
 
         app.contract().selectContractById(contractToDelete.getId());
@@ -36,7 +33,7 @@ public class ContractDeletionTests extends TestBase {
         app.goTo().homePage();
 
         assertThat(app.contract().count(),equalTo(before.size()-1));
-        Contracts after = app.contract().all();
+        Contracts after = app.db().contracts();
 
         assertThat(after, equalTo(before.withOut(contractToDelete)));
 

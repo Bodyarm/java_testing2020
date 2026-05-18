@@ -1,4 +1,4 @@
-package ru.stqa.giv.addressbook.tests.contracts;
+package ru.stqa.giv.addressbook.tests.db.contracts;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,7 +14,7 @@ public class ContractModificationTests extends TestBase {
     @BeforeMethod
     public void checkPreconditions(){
         app.goTo().homePage();
-        if (app.contract().all().isEmpty()){
+        if (app.db().contracts().isEmpty()){
             app.contract().create(new ContractData()
                     .withFirstname("Check1")
                     .withMiddleName("Kus")
@@ -29,11 +29,10 @@ public class ContractModificationTests extends TestBase {
 
     }
 
-    @Test(enabled = false)
-    //Упадёт из-за изменений в ContractData equals. Стало больше полей
+    @Test
     public void testContractModification() throws Exception {
 
-        Contracts before = app.contract().all();
+        Contracts before = app.db().contracts();
         ContractData contractToModify = before.iterator().next();
         ContractData contractChanged = contractToModify.withFirstname("mod2").withLastName("mod3");
 
@@ -43,7 +42,7 @@ public class ContractModificationTests extends TestBase {
         app.goTo().homePage();
 
         assertThat(app.contract().count(),equalTo(before.size()));
-        Contracts after = app.contract().all();
+        Contracts after = app.db().contracts();
 
         assertThat(after, equalTo(before.withOut(contractToModify).withAdded(contractChanged)));
 

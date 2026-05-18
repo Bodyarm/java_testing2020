@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.stqa.giv.addressbook.model.ContractData;
+import ru.stqa.giv.addressbook.model.Contracts;
 import ru.stqa.giv.addressbook.model.GroupData;
 import ru.stqa.giv.addressbook.model.Groups;
 
@@ -29,5 +31,15 @@ public class DBHelper {
         session.getTransaction().commit();
         session.close();
         return new Groups(result);
+    }
+
+
+    public Contracts contracts() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContractData> result = session.createQuery("from ContractData").list();
+        session.getTransaction().commit();
+        session.close();
+        return new Contracts(result);
     }
 }

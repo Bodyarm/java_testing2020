@@ -20,7 +20,7 @@ public class ContractData {
     @Column(name="firstname")
     private String firstname;
     @XStreamOmitField
-    @Transient
+    @Column(name="middlename")
     private String middlename;
     @Expose
     @Column(name="lastname")
@@ -50,26 +50,26 @@ public class ContractData {
     @Transient
     private String allPhones ="";
     @XStreamOmitField
-    @Transient
+    @Column(name="email")
     private String email1 = "";
     @XStreamOmitField
-    @Transient
+    @Column(name="email2")
     private String email2 = "";
     @XStreamOmitField
-    @Transient
+    @Column(name = "email3")
     private String email3 = "";
     @XStreamOmitField
     @Transient
     private String allEmails ="";
     @Expose
-    @Transient
+    @Column(name="address")
     private String postaddress = "";
     @XStreamOmitField
     @Column(name="photo", columnDefinition = "TEXT")
     private String photo="";
 
     public File getPhoto() {
-        return new File(photo);
+        return new File(Objects.requireNonNullElse(photo,""));
     }
 
     public String getPostAddress(){
@@ -226,23 +226,6 @@ public class ContractData {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContractData that = (ContractData) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(middlename, that.middlename);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hashCode(firstname);
-        result = 31 * result + Objects.hashCode(middlename);
-        result = 31 * result + id;
-        return result;
-    }
-
 
     @Override
     public String toString() {
@@ -252,4 +235,40 @@ public class ContractData {
                 ", lastname='" + lastname + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContractData that = (ContractData) o;
+        return id == that.id
+                && Objects.equals(firstname, that.firstname)
+                && Objects.equals(middlename, that.middlename)
+                && Objects.equals(lastname, that.lastname)
+                && Objects.equals(phoneHome, that.phoneHome)
+                && Objects.equals(phoneMobile, that.phoneMobile)
+                && Objects.equals(phoneWork, that.phoneWork)
+                && Objects.equals(email1, that.email1)
+                && Objects.equals(email2, that.email2)
+                && Objects.equals(email3, that.email3);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + Objects.hashCode(firstname);
+        result = 31 * result + Objects.hashCode(middlename);
+        result = 31 * result + Objects.hashCode(lastname);
+        result = 31 * result + Objects.hashCode(phoneHome);
+        result = 31 * result + Objects.hashCode(phoneMobile);
+        result = 31 * result + Objects.hashCode(phoneWork);
+        result = 31 * result + Objects.hashCode(email1);
+        result = 31 * result + Objects.hashCode(email2);
+        result = 31 * result + Objects.hashCode(email3);
+
+
+        return result;
+    }
+
 }
