@@ -40,7 +40,7 @@ public class ContractEmailTests extends TestBase {
                     .withNickName("LegNeck")
                     .withTitle("HOHOHO")
                     .withCompany("ClosedWay")
-                    .withGroup("test1")
+                    //.withGroup("test1")
                     .withEmail1("pub@mail.ru")
                     .withEmail2("pub@rambler.ru")
                     .withEmail3("kusmadan@narod.org")

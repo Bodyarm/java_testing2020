@@ -1,10 +1,13 @@
 package ru.stqa.giv.addressbook.tests.db.contracts;
 
 import com.thoughtworks.xstream.XStream;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
+import ru.stqa.giv.addressbook.model.GroupData;
+import ru.stqa.giv.addressbook.model.Groups;
 import ru.stqa.giv.addressbook.tests.TestBase;
 
 import java.io.BufferedReader;
@@ -20,6 +23,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class ContractCreationTests extends TestBase {
+
+    @BeforeMethod
+    public void preparations(){
+        //Create group if there are no groups
+        if(app.db().groups().isEmpty()){
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("NewCreatedGroup").withFooter("Footeer Lol").withHeader("Header Lol"));
+            app.goTo().homePage();
+        }
+    }
+
 
     @DataProvider
     public Iterator<Object[]> groupFromXML() throws IOException {
@@ -73,24 +87,26 @@ public class ContractCreationTests extends TestBase {
 
 
 
+
+
     @Test
     public void testContractCreation()  {
 
-        app.goTo().homePage();
+        Groups groups = app.db().groups();
         Contracts before = app.db().contracts();
 
         app.contract().initContractCreation();
         ContractData contractToCreate = new ContractData()
-                .withFirstname("check")
+                .withFirstname("Kusman")
                 .withMiddleName("test2")
                 .withLastName("test3")
                 .withNickName("test4")
                 .withTitle("Good title")
                 .withCompany("Dreamworks")
-                .withGroup("test1")
                 .withPhoneHome("+79117661844")
                 .withPhoneMobile("8(921)969-51-40")
                 .withPhoneWork("27-93")
+                .inGroup(groups.iterator().next())
                 ;
         app.contract().create(contractToCreate);
         app.goTo().homePage();

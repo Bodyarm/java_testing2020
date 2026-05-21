@@ -6,7 +6,9 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contract")
 @Entity
@@ -34,9 +36,6 @@ public class ContractData {
     @XStreamOmitField
     @Transient
     private String company;
-    @XStreamOmitField
-    @Transient
-    private String group;
     @XStreamOmitField
     @Column(name="home", columnDefinition = "TEXT")
     private String phoneHome;
@@ -67,6 +66,13 @@ public class ContractData {
     @XStreamOmitField
     @Column(name="photo", columnDefinition = "TEXT")
     private String photo="";
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),inverseJoinColumns = @JoinColumn(name= "group_id"))
+
+    @XStreamOmitField
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
 
     public File getPhoto() {
         return new File(Objects.requireNonNullElse(photo,""));
@@ -136,7 +142,11 @@ public class ContractData {
         return company;
     }
 
-    public String getGroup() {return group;}
+    public Groups getGroups() {
+        if(groups == null)
+            this.groups = new HashSet<>();
+        return new Groups(groups);
+    }
 
     public ContractData withId(int id) {
         this.id = id;
@@ -173,8 +183,8 @@ public class ContractData {
         return this;
     }
 
-    public ContractData  withGroup(String group) {
-        this.group = group;
+    public ContractData  withGroups(Set<GroupData> groups) {
+        this.groups = groups;
         return this;
     }
 
@@ -271,4 +281,9 @@ public class ContractData {
         return result;
     }
 
+    public ContractData inGroup(GroupData group) {
+        this.groups.add(group);
+        return this;
+
+    }
 }

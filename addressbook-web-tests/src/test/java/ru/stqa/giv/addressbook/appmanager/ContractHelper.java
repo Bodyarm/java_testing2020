@@ -43,8 +43,8 @@ public class ContractHelper  extends HelperBase{
         attachFile(By.name("photo"), contractData.getPhoto());
 
         if (creation) {
-            if ( contractData.getGroup() !=null) {
-                    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contractData.getGroup());
+            if (!contractData.getGroups().isEmpty()) {
+                    new Select(wd.findElement(By.name("new_group"))).selectByValue(new Integer(contractData.getGroups().iterator().next().getId()).toString());
             }
         }
         else {
@@ -81,9 +81,10 @@ public class ContractHelper  extends HelperBase{
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void create(ContractData contractData) {
+    public void create(ContractData contract) {
+        logger.info("Start creating contracts:{}", contract.toString());
         initContractCreation();
-        fillContractForm(contractData,true);
+        fillContractForm(contract,true);
         submitContractCreation();
     }
 

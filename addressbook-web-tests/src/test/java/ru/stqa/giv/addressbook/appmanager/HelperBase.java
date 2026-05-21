@@ -4,10 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.stqa.giv.addressbook.tests.TestBase;
 
 import java.io.File;
 
 public class HelperBase {
+
+
+    protected Logger logger = LoggerFactory.getLogger(HelperBase.class);
     protected WebDriver wd;
 
     public HelperBase(WebDriver wd) {

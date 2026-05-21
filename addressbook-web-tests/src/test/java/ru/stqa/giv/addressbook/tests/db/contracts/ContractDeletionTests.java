@@ -14,7 +14,14 @@ public class ContractDeletionTests extends TestBase {
     public void checkPreconditions(){
         app.goTo().homePage();
         if (app.db().contracts().isEmpty()){
-            app.contract().create(new ContractData().withFirstname("Check1").withMiddleName("Kus").withLastName("Dog lover").withNickName("LegNeck").withTitle("HOHOHO").withCompany("ClosedWay").withGroup("test1"));
+            app.contract().create(new ContractData().withFirstname("Check1")
+                    .withMiddleName("Kus")
+                    .withLastName("Dog lover")
+                    .withNickName("LegNeck")
+                    .withTitle("HOHOHO")
+                    .withCompany("ClosedWay"));
+//                    .withGroup("test1"))
+
         };
         app.goTo().homePage();
 

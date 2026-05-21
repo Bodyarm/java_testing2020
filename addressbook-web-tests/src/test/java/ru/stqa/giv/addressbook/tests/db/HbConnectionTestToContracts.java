@@ -41,6 +41,7 @@ public class HbConnectionTestToContracts {
         for( ContractData contract : result){
             System.out.print(contract);
             System.out.println(contract.getPhoneHome());
+            System.out.println(contract.getGroups());
 
         }
         session.getTransaction().commit();

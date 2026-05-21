@@ -89,7 +89,7 @@ public class ContractCreationTests extends TestBase {
                 .withNickName("test4")
                 .withTitle("Good title")
                 .withCompany("Dreamworks")
-                .withGroup("test1")
+                //.withGroup("test1")
                 .withPhoneHome("+79117661844")
                 .withPhoneMobile("8(921)969-51-40")
                 .withPhoneWork("27-93")
