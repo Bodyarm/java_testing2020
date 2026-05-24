@@ -60,6 +60,7 @@ public class GroupHelper extends HelperBase{
         submitGroupCreation();
         cleanCache();
         returnToGroupPage();
+        logger.info("Group {} was created", group.toString());
 
     }
 
@@ -106,6 +107,7 @@ public class GroupHelper extends HelperBase{
         }
         return new Groups(groupCache);
     }
+
 
 
 }

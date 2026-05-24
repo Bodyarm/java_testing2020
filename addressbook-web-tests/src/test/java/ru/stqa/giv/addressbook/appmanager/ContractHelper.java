@@ -1,12 +1,14 @@
 package ru.stqa.giv.addressbook.appmanager;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.giv.addressbook.model.ContractData;
 import ru.stqa.giv.addressbook.model.Contracts;
+import ru.stqa.giv.addressbook.model.GroupData;
 
 import java.util.*;
 
@@ -60,7 +62,11 @@ public class ContractHelper  extends HelperBase{
 
 
     public void selectContractById(int id) {
-        click(By.cssSelector(String.format("input[value='%s']", id)));
+        try {click(By.cssSelector(String.format("input[value='%s']", id)));
+        }
+        catch (NoSuchElementException e ){
+            logger.error("No contract with id {} founded", id);
+        }
     }
 
     public void deleteSelectedContracts() {
@@ -82,10 +88,11 @@ public class ContractHelper  extends HelperBase{
     }
 
     public void create(ContractData contract) {
-        logger.info("Start creating contracts:{}", contract.toString());
+        logger.info("Start creating contract:{}", contract.toString());
         initContractCreation();
         fillContractForm(contract,true);
         submitContractCreation();
+        logger.info("Contract {} was created", contract.toString());
     }
 
     public void cleanCache(){
@@ -143,7 +150,7 @@ public class ContractHelper  extends HelperBase{
 
     public ContractData getContractFullDataByID(int id) {
         initContractModificationById(id);
-        ContractData contract = new ContractData()
+        return new ContractData()
                 .withFirstname(wd.findElement(By.name("firstname")).getAttribute("value"))
                 .withMiddleName(wd.findElement(By.name("middlename")).getAttribute("value"))
                 .withLastName(wd.findElement(By.name("lastname")).getAttribute("value"))
@@ -157,8 +164,37 @@ public class ContractHelper  extends HelperBase{
                 .withEmail2(wd.findElement(By.name("email2")).getAttribute("value"))
                 .withEmail3(wd.findElement(By.name("email3")).getAttribute("value"))
                 .withPostAddress(wd.findElement(By.name("address")).getText());
-
-
-        return contract;
     }
+
+    public void filterContractsByGroup(GroupData group) {
+        try {new Select(wd.findElement(By.name("group"))).selectByValue(Integer.toString(group.getId()));}
+            catch (NoSuchElementException e){
+                logger.error("No group with id {} founded in filter list", group.getId());
+            }
+
+    }
+
+    public void removeContractFromGroup(ContractData contract, GroupData group) {
+        filterContractsByGroup(group);
+        selectContractById(contract.getId());
+        click(By.name("remove"));
+        logger.info("Contract {} was removed from group {}", contract.toString(), group.toString());
+    }
+
+
+    public void addContractToGroup(ContractData contract, GroupData group){
+        selectContractById(contract.getId());
+        selectGroupToAdd(group);
+        click(By.name("add"));
+        logger.info("Contract {} added to group {}", contract.getId(), group.toString());
+    }
+
+    private void selectGroupToAdd(GroupData group) {
+        try {new Select(wd.findElement(By.name("to_group"))).selectByValue(Integer.toString(group.getId()));}
+        catch (NoSuchElementException e){
+            logger.error("No group with id {} founded in add list", group.getId());
+        }
+    }
+
+
 }
