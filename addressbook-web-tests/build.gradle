@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.testng:testng:7.12.0"
+    testImplementation "org.testng:testng:7.12.0"
     implementation("org.seleniumhq.selenium:selenium-java:4.43.0")
     testImplementation("org.hamcrest:hamcrest:3.0")           // Source: https://mvnrepository.com/artifact/org.hamcrest/hamcrest
     runtimeOnly("org.jcommander:jcommander:3.0")              // Source: https://mvnrepository.com/artifact/org.jcommander/jcommander
@@ -16,7 +16,7 @@ dependencies {
     implementation("org.hibernate.orm:hibernate-core:7.3.4.Final")     // Source: https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
 }
 
-task testGroups(type: Test) {
+tasks.register("testGroups", Test) {
     useTestNG {
         suites 'src/test/resources/testng-groups.xml'
     }
@@ -28,7 +28,7 @@ task testGroups(type: Test) {
     }
 }
 
-task testContracts(type: Test) {
+tasks.register("testContracts", Test) {
     useTestNG {
         suites 'src/test/resources/testng-contracts.xml'
     }
@@ -38,4 +38,8 @@ task testContracts(type: Test) {
     if(project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
+}
+
+test {
+    useTestNG()
 }
